@@ -13,8 +13,16 @@
 <!--vueJS will manage everything inside this div vvv-->
     <div id="app">
 
+        <!-- TODOne show errors from form validation (class is a bootstrap class), v-if is a Vue property only see
+         alert if there are errors, or errors.length > 0 -->
+        <div class="alert alert-danger" v-if="errors.length > 0">
+<!--            have an array of potential error messages-->
+<!--            make an unordered array -->
+            <ul>
+                <li v-for="error in errors">{{ error }}</li>
+            </ul>
 
-        <!-- TODO show errors from form validation -->
+        </div>
 
 
         <div class="card add-student m-2 p-2">
@@ -56,10 +64,9 @@
                     <tr v-for="student in students">
                         <td>{{ student.name }}</td>
                         <td>{{ student.starID }}</td>
-                        <td>{{ student.present }}</td>
+<!--                        <td>{{ student.present }}</td>-->
 
                     </tr>
-
                 </table>
             </div>
         </div>
@@ -76,11 +83,11 @@
         // TODO Vue app
         let app = Vue.createApp({
             //working toward student data management, start with:
-            data(){
-                return{
+            data() {
+                return {
                 //    create two new data properties using v-model directive to link
                 //    what's typed in the inputs (in html above) with Vue
-                    newStudentName : '', //empty string to start (add v-model in the html div with the name label)
+                    newStudentName: '', //empty string to start (add v-model in the html div with the name label)
                     newStarID: '', //empty string to start
 
                 //    create a fake array of students (to begin with):
@@ -88,32 +95,57 @@
                         { name: 'A. student', starID: 'aa1234cc', present: false},
                         { name: 'B. student', starID: 'bb1234cc', present: false},
                         { name: 'C. student', starID: 'dd1234cc', present: false}
-                    ]
+                    ],
+                //    work with errors here, create an empty errors array:
+                    errors: []
                 }
             },
             //add Student Method (after the data) to make the button do something (from v-on:click="add student" above)
-            methods:{
-                addStudent(){
-                    //todo add student:
-                //    what does this method need to do?
-                //    1. Read whatever the new student name that is typed in.
-                //    2. Read whatever the new star ID is and make a new student object
-                //    3. add both ^^ to our new students array
-                //    **assume the student is not yet present (present: false)
-                    let student = {name: this.newStudentName, starID: this.newStarID, present: false}
-                    //    **add new student object onto this.students (the array that is Vue data)
-                    this.students.push(student)
-                //    paused video 2, 14:32
+            methods: {
+                addStudent() {
+                    //begin by assuming there are no errors:
+                    this.errors = [] //clears errors array
+
+                    //if the user input info is NOT a new student name, push the message onto the errors array:
+                    if (!this.newStudentName) {
+                        this.errors.push('Student name must be input.')
+                    }
+                    //check the starID to make sure it is entered by the user:
+                    if (!this.starID) {
+                        this.errors.push('StarId must be entered.')
+                    }
+                    //todo add other checks here if needed (for example length of star id or duplicate star id, etc.
+
+                    //if there are zero errors:
+                    if (this.errors.length === 0) {
+                        //todone add some simple validation: (check there is a name and star ID)
+                        // if (this.newStudentName && this.newStarID) { //modified this so it is inclusive of errors above:
+                        // if (this.errors.length == 0){
+                        //    only do the below action if both of the conditions *just* above^^^ are met.
+                        //    put the actions surrounded in curly braces
+                        //todone add student:
+                        //    what does this method need to do?
+                        //    1. Read whatever the new student name that is typed in.
+                        //    2. Read whatever the new star ID is and make a new student object
+                        //    3. add both ^^ to our new students array
+                        //    **assume the student is not yet present (present: false)
+                        let student = { name: this.newStudentName, starID: this.newStarID, present: false }
+                        //    **add new student object onto this.students (the array that is Vue data)
+                        this.students.push(student)
+                        //    modify form to clear when the new student has been added via click:
+                        this.newStudentName = '' //clears the form
+                        this.newStarID = ''
+                    }
+                    //    if (this.errors.length *does not* == 0) OTHERWISE:
+                    //    think about how to display errors to user --alerts?
                 }
             }
-
         })
 
         //this mounts the app onto the page
         //the #app is the id for the div where all the things
         //view will manage is located (above)
         app.mount('#app')
-
 
     </script>
 
