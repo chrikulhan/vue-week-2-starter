@@ -10,11 +10,21 @@ th, tr {
 .present {
     color: gray;
     font-style: italic;
+    background-color: pink;
 }
 
 .absent {
     color: black;
     font-weight: bold;
+    background-color: lightgreen;
+}
+
+/*add a style for the v-cloak directive that was placed
+in the "student_sign_in.html file here: <div id="app" v-cloak>, just
+below the beginning of body*/
+/*the browswer will find the v-cloak here and this attribute,  */
+[v-cloak] {
+    display: none;
 }
 
 

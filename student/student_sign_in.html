@@ -11,7 +11,11 @@
 
 <body>
 <!--vueJS will manage everything inside this div vvv-->
-    <div id="app">
+<!--Before view loads (expecially if someone has a slow connection)
+you might see flashes of the below HTML code. -->
+<!--To get around that, use v-cloak, and means we want to hid this
+until the page loads.(also need to change something in the styles.css-->
+    <div id="app" v-cloak>
 
         <!-- TODOne show errors from form validation (class is a bootstrap class), v-if is a Vue property only see
          alert if there are errors, or errors.length > 0 -->
@@ -61,7 +65,17 @@
                     capture all possible students (open ended)-->
 <!--                    vvv students is the name of the vue property
                         vvv student is the name that we can make up -->
-                    <tr v-for="student in students">
+<!--                    Want to apply styles (from CSS) (gray or black) to each table row
+                        using v-bind to set html attributes on elements, for example, class element:-->
+<!--                    v-bind: class="{}" object
+                        v-bind: class=" { present } "
+                        1. should this ^^^ class be applied or not and under what conditions?
+                        2. The second argument in the object is the condition (if the specific student is present):
+                        v-bind: class=" { present: student.present } "
+                        -->
+<!--                    <tr v-for="student in students" v-bind:class=" { present: student.present } ">-->
+<!--                    add a property absent to the vvv v-bind:class= (absent: !(not)student.present)-->
+                    <tr v-for="student in students" v-bind:class=" { present: student.present, absent: !student.present } ">
                         <td>{{ student.name }}</td>
                         <td>{{ student.starID }}</td>
 <!--                        <td>{{ student.present }}</td>-->
@@ -81,7 +95,6 @@
                                  arrivedOrLeft method (below)**modify the arrivedOrLeft method to accommodate.-->
                             <input type="checkbox" v-model="student.present" v-on:change="arrivedOrLeft(student)">
                         </td>
-
                     </tr>
                 </table>
             </div>
@@ -89,7 +102,21 @@
 
 
         <!-- TODO show a message when student arrives or leaves  -->
+<!--        there are two references to mostRecentStudent after this one.
+First is an empty *object* uses {}, the second is the the vue app way at the bottom embedded here: -->
+<!--        arrivedOrLeft(student){-->
+        <div v-if="mostRecentStudent.name">
 
+            <div class="alert alert-success" v-if="mostRecentStudent.present">
+                Welcome, {{ mostRecentStudent.name }}
+            </div>
+
+            <div class="alert alert-info" v-else>
+<!--                ^^doesn't need a condition after it, v-else will
+                    happen if v-if doesn't.-->
+                Goodbye, {{ mostRecentStudent.name }}. See you later!
+            </div>
+        </div>
 
     </div>
 
@@ -157,13 +184,16 @@
                     //    think about how to display errors to user --alerts?
                 },
                 //add student to parentheses to deal with clicking boxes and passing info (from above) AND
-                //log ,student in console.log('Someone arrived or left.', student)
-                arrivedOrLeft(student) {
-                    console.log('Someone arrived or left.', student)
+                //log ,student in console.log('Someone arrived or left.', student) to test this.
+                arrivedOrLeft(student){
+                    //work toward adding a message when the student toggles their name:
+                    this.mostRecentStudent = student
                 }
+                    // {console.log('Someone arrived or left.', student)}
+                    // ^^ this was replaced with this.mostRecentStudent = student
             }
         })
-        //***paused video 3, timestamp 9:22. (go back a bit to catch the drift.)
+
 
         //this mounts the app onto the page
         //the #app is the id for the div where all the things
