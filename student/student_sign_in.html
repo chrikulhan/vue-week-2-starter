@@ -65,6 +65,22 @@
                         <td>{{ student.name }}</td>
                         <td>{{ student.starID }}</td>
 <!--                        <td>{{ student.present }}</td>-->
+                        <td>
+<!--                            make a checkbox for user to click present
+                                v-model can link the checked or unchecked status to a property(here the property is:
+                                 v-model="student.present", expected that the responses will be true or false
+                                 can be modified in the devtools (or by the browser in some *magic* way) cool!-->
+<!--                            add a v-on after the student.present to deal with the mostRecent arrival/departure:
+                                v-on:change is used by clicking the box (move down to methods VVV)-->
+<!--                            modify the way the v-on:change method is called by giving it a parameter
+                                (before: v-on:change="arrivedOrLeft"
+                                after: v-on:change="arrivedOrLeft(student)"
+                                SO when the on:change event is fired (checkbox is clicked/unclicked),then a
+                                 specific checkbox will call this arrivedOrLeft method, that specific checkbox
+                                 will be for a specific student and that student's info will be passed to the
+                                 arrivedOrLeft method (below)**modify the arrivedOrLeft method to accommodate.-->
+                            <input type="checkbox" v-model="student.present" v-on:change="arrivedOrLeft(student)">
+                        </td>
 
                     </tr>
                 </table>
@@ -97,7 +113,8 @@
                         { name: 'C. student', starID: 'dd1234cc', present: false}
                     ],
                 //    work with errors here, create an empty errors array:
-                    errors: []
+                    errors: [],
+                    mostRecentStudent: {} //for the most recent arrival or departure
                 }
             },
             //add Student Method (after the data) to make the button do something (from v-on:click="add student" above)
@@ -138,9 +155,15 @@
                     }
                     //    if (this.errors.length *does not* == 0) OTHERWISE:
                     //    think about how to display errors to user --alerts?
+                },
+                //add student to parentheses to deal with clicking boxes and passing info (from above) AND
+                //log ,student in console.log('Someone arrived or left.', student)
+                arrivedOrLeft(student) {
+                    console.log('Someone arrived or left.', student)
                 }
             }
         })
+        //***paused video 3, timestamp 9:22. (go back a bit to catch the drift.)
 
         //this mounts the app onto the page
         //the #app is the id for the div where all the things
