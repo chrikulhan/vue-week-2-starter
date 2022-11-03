@@ -61,25 +61,25 @@
                     <select class="form-control" v-model="type">
 <!--                        11. set up our options using v-for because there might be MANY options-->
 <!--                        v-for will duplicatet this option once for every activity type in the types array: -->
-                        <options v-for="activityType in types">{{ activityType }}</options>
+                        <option v-for="activityType in types">{{ activityType }}</option>
                     </select>
-
                 </div>
 
                 <div class="form-label pb-2">
-                    What media?
+                    Where did you exercise?
                 </div>
-
+            <!--Radio buttons!!
+            12. timestamp 16:44 video 5 PAUSE-->
                 <div class="form-check-inline">
-                    <!-- TODO v-model media -->
+                    <!-- TODO v-model location -->
                     <input id="media1" class="form-check-input" type="radio">
-                    <label class="form-check-label" for="media1">  <!--TODO Display text -->  </label>
+                    <label class="form-check-label" for="location1">  <!--TODO Display text -->  </label>
                 </div>
 
                 <div class="form-check-inline">
-                    <!-- TODO v-model media -->
-                    <input id="media2" class="form-check-input" type="radio">
-                    <label class="form-check-label" for="media2">  <!-- TODO Display text -->  </label>
+                    <!-- TODO v-model location -->
+                    <input id="location2" class="form-check-input" type="radio">
+                    <label class="form-check-label" for="location2">  <!-- TODO Display text -->  </label>
                 </div>
 
                 <div>
@@ -103,7 +103,7 @@
                             <th>Date</th>
                             <th>How many hours?</th>
                             <th>Type</th>
-                            <th>Media</th>
+                            <th>Location</th>
                         </tr>
                         <!-- TODO use v-for to create one table row for each activity record -->
                     </table>
@@ -144,8 +144,10 @@
             //     work with the form data:
                 date: '', //empty string
                 hours: 1, //default value on the form will be 1
-                type: 'biking',
-                toolsUsed: 'bicycle', //clara used medium: for her data
+                //11. match the type and first types array item
+                type: 'Biking', //if this type matches the first item in the array types (below), this will
+                //show up in the toggle <select> bar as the first one chosen.
+                location: 'outside', //clara used medium: for her data
 
             //    9. create an array of the types of exercise that will be used with the select-option in
                 //    form for the user to select the type.
