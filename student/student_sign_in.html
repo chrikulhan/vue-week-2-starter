@@ -179,6 +179,31 @@ First is an empty *object* uses {}, the second is the the vue app way at the bot
                         //    modify form to clear when the new student has been added via click:
                         this.newStudentName = '' //clears the form
                         this.newStarID = ''
+
+                    //    If there are no errors in the form and a new student is pushed, then
+                    //    the students could be ordered so it is easier for student users to see their names:
+                    //    javascript has a sort method **built in** that takes a function as an argument:
+                    //    -need to write the function: with two arguments that represent any pair of students in the
+                    //    students array. This will need to return a positive number if s2 should be sorted before s1, and
+                        //    will return a negative number if s1 is sorted before s2:
+                        this.students.sort(function(s1, s2){
+
+                            //return positive number if s1 should be sorted after s2
+                            //convert all the names to upper OR lower case so they can be
+                            //compared and ordered correctly. So A and a will be sorted next to each other.
+                            if (s1.name.toUpperCase() > s2.name.toUpperCase()) {
+                                return 1
+                            }
+                            //return negative number if s1 should be sorted before s2
+                            if (s1.name.toUpperCase() < s2.name.toUpperCase()) {
+                                return -1
+                            }
+                            //return 0 if order is equivalent.
+                            return 0
+                        //    optional--could compare starIDs
+                        //    more info on compare: https://www.w3schools.com/js/js_array_sort.asp
+                        })
+
                     }
                     //    if (this.errors.length *does not* == 0) OTHERWISE:
                     //    think about how to display errors to user --alerts?
