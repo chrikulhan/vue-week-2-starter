@@ -1,0 +1,11 @@
+***Activity time tracker
+
+-For tracking the amount of time spent on an activity – for this example, practicing art
+     *But could track studying, coding, practicing a language, playing video games, sports, training, workouts....
+-Saves the date the activity was done on
+-The number of hours
+-The type – in this example, drawing, painting and sketching
+    *An example of using a select-option input
+-The medium – in this example, digital or traditional (on paper/canvas)
+    *Example of using radio buttons
+

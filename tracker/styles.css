@@ -1,4 +1,6 @@
 #records {
     max-height: 250px;
+    /*if there are a lot of rows, it will make the page
+    scroll instead of making the page very tall.: */
     overflow: scroll;
 }

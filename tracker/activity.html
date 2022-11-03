@@ -11,10 +11,12 @@
 </head>
 
 <body>
+<!--this div will contain all the text/data that view wi-- work with:-->
     <div id="app">
 
-        <!-- TODO display the name of the activity -->
-        <h1 class="text-center">Time Tracker</h1>
+        <!-- 5. TODO display the name of the activity (add mustache syntax)-->
+<!--        <h1 class="text-center">Time Tracker</h1>-->
+        <h1 class="text-center">{{ activity }} Time Tracker</h1>
 
         <div id="add-hours" class="card">
 
@@ -37,9 +39,13 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="form-label" for="hours">How many hours did you practice for?</label>
-                    <!-- TODO use v-model to connect this input to hours data -->
-                    <input id="hours" class="form-control" type="number" min="0" max="24">
+                    <label class="form-label" for="hours">How many hours did exercise?</label>
+                    <!-- 8. TODO use v-model to connect this input to hours data -->
+<!--                    <input id="hours" class="form-control" type="number" min="0" max="24">-->
+<!--                    added v-model="hours" (the name of the data property) basic version: -->
+<!--                    <input id="hours" class="form-control" type="number" min="0" max="24" v-model="hours">-->
+<!--                    add a modifier in v-model to help vue remove non-numeric data: -->
+                    <input id="hours" class="form-control" type="number" min="0" max="24" v-model.number="hours">
                     <small id="hours-help" class="form-text text-muted">
                         Enter a number of hours, more than 0, up to a maximum of 24
                     </small>
@@ -47,8 +53,17 @@
 
                 <div class="form-group">
                     <label class="form-label" for="type">What type?</label>
-                    <!-- TODO Create select element, use v-model to connect to the types -->
-                    <!-- TODO Use v-for to create option elements, one for each type -->
+                    <!--  TODO Create select element, use v-model to connect to the types (the property created in the let app = Vue.createApp( type:) -->
+
+                    <!-- 10. TODO Use v-for to create option elements, one for each type -->
+<!--                    bootstrap class form control will make this consistent with other components:
+                        **when you use v-model with type, whatever the choice is will be whatever the type is set to: -->
+                    <select class="form-control" v-model="type">
+<!--                        11. set up our options using v-for because there might be MANY options-->
+<!--                        v-for will duplicatet this option once for every activity type in the types array: -->
+                        <options v-for="activityType in types">{{ activityType }}</options>
+                    </select>
+
                 </div>
 
                 <div class="form-label pb-2">
@@ -114,7 +129,35 @@
 
     <script>
 
-    //   TODO create new Vue app here
+<!--        Todone create new Vue app here:-->
+// 1.
+    let app = Vue.createApp({
+        //3. add data:
+        data(){
+            return{
+                //4. create first piece of data, name of type of activity:
+                activity: 'Exercise',
+            //    6. save data that is input in an array:
+                activityRecords: [], //empty array
+
+            //    7. add other properties that work with v-model to
+            //     work with the form data:
+                date: '', //empty string
+                hours: 1, //default value on the form will be 1
+                type: 'biking',
+                toolsUsed: 'bicycle', //clara used medium: for her data
+
+            //    9. create an array of the types of exercise that will be used with the select-option in
+                //    form for the user to select the type.
+                types: ['Biking', 'Walking', 'Running', 'Rowing']
+
+            }
+        }
+
+    })
+
+//2.
+app.mount('#app')
 
     </script>
 

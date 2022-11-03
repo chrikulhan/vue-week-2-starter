@@ -1,0 +1,65 @@
+
+***Vue
+
+-Adding interactivity
+-Forms, two-way data binding
+
+cloned repository from this fork:
+https://github.com/claraj/vue-week-2-starter
+
+finished code for reference:
+https://github.com/claraj/vue-week-2
+
+***Student sign in page:
+Most of the HTML is written for you
+
+Uses Bootstrap, but Bootstrap is not necessary for Vue
+Only to make the page look a little nicer, for example, tables and alerts
+
+Code in the /student directory: student_sign_in.html and styles.css
+You'll create the Vue app
+Look for the TODO comments in the HTML template
+
+***Welcome message***
+**when clicking the "present" box on the page, what happens behind the scenes?:
+
+Would like to see a  'Welcome' message for the most recent student to sign in
+When a student leaves, show a 'Goodbye' message
+
+Couple of approaches:
+Can watch the values of properties and automatically run a function when they are changed –
+we'll see that in some other examples – but it doesn't work very well with objects in arrays.
+Hard to tell what changed
+
+Can add a v-on:change event handler that calls a function when the checkbox is changed
+(checked or unchecked)   <- this is easier for this application
+- also need to think about what data we may need to store or work with.
+- it would be helpful to think about capturing the data from the most recent arrival or departure student info.
+    **add a new property to capture that data. (add mostRecentStudent in the vue app (let app = Vue.createApp(),
+    after the errors (don't forget the comma)
+
+***Modify checkbox***
+
+Add v-on:change to the checkbox input
+The event handler functions can be called with arguments
+arrivedOrLeft function can take an argument – in this case, the student object the row is for
+So, we can tell who arrived, or left
+
+**Styling in bootstrap (to update when student arrive or leave message)
+https://getbootstrap.com/docs/4.0/components/alerts/
+
+**v-cloak in html and css:
+(https://vuejs.org/api/built-in-directives.html#v-cloak)
+
+**vue-js built in directives:
+https://vuejs.org/api/built-in-directives.html
+
+more info on compare (used to sort in alphabetical order):
+https://www.w3schools.com/js/js_array_sort.asp
+
+More info on unicode (why we need to .toUpperCase() or .toLowerCase()
+in order to compare because lower case a has a larger number than
+capital Z. https://en.wikipedia.org/wiki/List_of_Unicode_characters
+
+
+
