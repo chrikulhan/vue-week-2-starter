@@ -14,7 +14,7 @@
 <!--this div will contain all the text/data that view wi-- work with:-->
     <div id="app">
 
-        <!-- 5. TODO display the name of the activity (add mustache syntax)-->
+        <!-- 5. TODOne display the name of the activity (add mustache syntax)-->
 <!--        <h1 class="text-center">Time Tracker</h1>-->
         <h1 class="text-center">{{ activity }} Time Tracker</h1>
 
@@ -31,8 +31,9 @@
                 <div class="form-group">
                     <!-- TODO display name of activity in the label -->
                     <label class="form-label" for="date">What date did you do this activity?</label>
-                    <!-- TODO use v-model to connect this input to dateString data -->
-                    <input id="date" class="form-control" type="date">
+                    <!-- 14b. TODO use v-model to connect this input to dateString data -->
+<!--                    <input id="date" class="form-control" type="date">-->
+                    <input id="date" class="form-control" type="date" v-model="dateString">
                     <small id="date-help" class="form-text text-muted">
                         Date must be today or in the past.
                     </small>
@@ -68,34 +69,37 @@
                 <div class="form-label pb-2">
                     Where did you exercise?
                 </div>
-            <!--Radio buttons, if you select one, the other will unselect!!
+<!--            Radio buttons, if you select one, the other will unselect!!-->
 
+<!--                pause vid 5 18:40 for lunch-->
                 <div class="form-check-inline">
-                    <!-- TODO v-model location -->
+<!--                     TODOne v-model location -->
 <!--                    12. Add vue model to both radio buttons just below vvv: -->
 <!--                <input id="location1" class="form-check-input" type="radio">-->
-                    <input id="location1" class="form-check-input" type="radio" v-model="locations">
-<!--                    13.Set a value and display some text:-->
+<!--                    13a. Add a value attribute-->
+<!--                    <input id="location1" class="form-check-input" type="radio" v-model="locations">-->
+                    <input id="location1" class="form-check-input" type="radio" value="Outdoors" v-model="locations">
+<!--                    13b.Set a value and display some text:-->
 <!--                <label class="form-check-label" for="location1">  TODOne Display text </label>-->
                     <label class="form-check-label" for="location1">Outdoors</label>
                 </div>
 
                 <div class="form-check-inline">
-                    <!-- TODO v-model location -->
+                    <!-- TODOne v-model location -->
 <!--                    12. Add vue model to both radio buttons just below vvv: -->
 <!--                <input id="location2" class="form-check-input" type="radio">-->
-                    <input id="location2" class="form-check-input" type="radio" v-model="locations">
-<!--                    13.Set a value and display some text:-->
+                    <!--13a. Add a value attribute-->
+<!--                    <input id="location2" class="form-check-input" type="radio" v-model="locations">-->
+                    <input id="location2" class="form-check-input" type="radio" value="Indoors" v-model="locations">
+<!--                    13b.Set a value and display some text:-->
 <!--                    <label class="form-check-label" for="location2">  TODOne Display text </label>-->
-                    <label class="form-check-label" for="location2"> Indoors</label>
-<!--                    puase for computer updates 17.32 video 5-->
+                    <label class="form-check-label" for="location2">Indoors</label>
                 </div>
 
                 <div>
                     <!-- TODO Add v-on:click -->
                     <button class="btn btn-primary mt-2" type="button">Add record</button>
                 </div>
-                
             </div>
         </div>
 
@@ -130,10 +134,8 @@
                 <p>You have exercised a total of <!-- TODO display total hours --> hours</p>
 
                 <!-- Challenge question! Display a list of the total hours for each type.  -->
-          
             </div>
         </div>
-
     </div>
 
     <script>
@@ -151,20 +153,20 @@
 
             //    7. add other properties that work with v-model to
             //     work with the form data:
-                date: '', //empty string
+            //     14a. rename date to dateString:
+            //     date: '', //empty string
+                dateString: '', //empty string
                 hours: 1, //default value on the form will be 1
                 //11. match the type and first types array item
                 type: 'Biking', //if this type matches the first item in the array types (below), this will
                 //show up in the toggle <select> bar as the first one chosen.
-                location: 'outside', //clara used medium: for her data
+                locations: 'outside', //clara used medium: for her data
 
             //    9. create an array of the types of exercise that will be used with the select-option in
                 //    form for the user to select the type.
                 types: ['Biking', 'Walking', 'Running', 'Rowing']
-
             }
         }
-
     })
 
 //2.
