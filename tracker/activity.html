@@ -22,7 +22,7 @@
 
             <h2 class="card-header">Add Records</h2>
             <div class="card-body">
-               
+<!--               pause video 6 8:00 timestamp---starting in on errors arrays and validation-->
                 <!-- TODO use v-if to show this if there are validation errors -->
                 <div class="alert alert-danger">
                     <!-- TODO show a list of validation errors from form -->
@@ -31,7 +31,7 @@
                 <div class="form-group">
                     <!-- TODO display name of activity in the label -->
                     <label class="form-label" for="date">What date did you do this activity?</label>
-                    <!-- 14b. TODO use v-model to connect this input to dateString data -->
+                    <!-- 14b. TODOne use v-model to connect this input to dateString data -->
 <!--                    <input id="date" class="form-control" type="date">-->
                     <input id="date" class="form-control" type="date" v-model="dateString">
                     <small id="date-help" class="form-text text-muted">
@@ -41,7 +41,7 @@
 
                 <div class="form-group">
                     <label class="form-label" for="hours">How many hours did you exercise?</label>
-                    <!-- 8. TODO use v-model to connect this input to hours data -->
+                    <!-- 8. TODOne use v-model to connect this input to hours data -->
 <!--                    <input id="hours" class="form-control" type="number" min="0" max="24">-->
 <!--                    added v-model="hours" (the name of the data property) basic version: -->
 <!--                    <input id="hours" class="form-control" type="number" min="0" max="24" v-model="hours">-->
@@ -56,7 +56,7 @@
                     <label class="form-label" for="type">What type of exercise did you do?</label>
                     <!--  TODO Create select element, use v-model to connect to the types (the property created in the let app = Vue.createApp( type:) -->
 
-                    <!-- 10. TODO Use v-for to create option elements, one for each type -->
+                    <!-- 10. TODOne Use v-for to create option elements, one for each type -->
 <!--                    bootstrap class form control will make this consistent with other components:
                         **when you use v-model with type, whatever the choice is will be whatever the type is set to: -->
                     <select class="form-control" v-model="type">
@@ -71,34 +71,34 @@
                 </div>
 <!--            Radio buttons, if you select one, the other will unselect!!-->
 
-<!--                pause vid 5 18:40 for lunch-->
                 <div class="form-check-inline">
 <!--                     TODOne v-model location -->
-<!--                    12. Add vue model to both radio buttons just below vvv: -->
+<!--                    12a. Add vue model to both radio buttons just below vvv: -->
 <!--                <input id="location1" class="form-check-input" type="radio">-->
-<!--                    13a. Add a value attribute-->
+<!--                    13a1. Add a value attribute-->
 <!--                    <input id="location1" class="form-check-input" type="radio" v-model="locations">-->
                     <input id="location1" class="form-check-input" type="radio" value="Outdoors" v-model="locations">
-<!--                    13b.Set a value and display some text:-->
+<!--                    13b1.Set a value and display some text:-->
 <!--                <label class="form-check-label" for="location1">  TODOne Display text </label>-->
                     <label class="form-check-label" for="location1">Outdoors</label>
                 </div>
 
                 <div class="form-check-inline">
                     <!-- TODOne v-model location -->
-<!--                    12. Add vue model to both radio buttons just below vvv: -->
+<!--                    12b. Add vue model to both radio buttons just below vvv: -->
 <!--                <input id="location2" class="form-check-input" type="radio">-->
-                    <!--13a. Add a value attribute-->
+                    <!--13a2. Add a value attribute-->
 <!--                    <input id="location2" class="form-check-input" type="radio" v-model="locations">-->
                     <input id="location2" class="form-check-input" type="radio" value="Indoors" v-model="locations">
-<!--                    13b.Set a value and display some text:-->
+<!--                    13b2.Set a value and display some text:-->
 <!--                    <label class="form-check-label" for="location2">  TODOne Display text </label>-->
                     <label class="form-check-label" for="location2">Indoors</label>
                 </div>
 
                 <div>
-                    <!-- TODO Add v-on:click -->
-                    <button class="btn btn-primary mt-2" type="button">Add record</button>
+                    <!-- 15a. TODOne Add v-on:click , (then move to vue app to add a submit method)-->
+<!--                    <button class="btn btn-primary mt-2" type="button">Add record</button>-->
+                    <button class="btn btn-primary mt-2" type="button" v-on:click="submit">Add record</button>
                 </div>
             </div>
         </div>
@@ -118,7 +118,13 @@
                             <th>Type</th>
                             <th>Location</th>
                         </tr>
-                        <!-- TODO use v-for to create one table row for each activity record -->
+                        <!-- 16. TODOne use v-for to create one table row for each activity record -->
+                        <tr v-for="record in activityRecords">
+                            <td> {{ record.date }} </td>
+                            <td> {{ record.hours}} </td>
+                            <td> {{ record.type}} </td>
+                            <td> {{ record.locations}} </td>
+                        </tr>
                     </table>
                 </div>
             </div>
@@ -165,6 +171,24 @@
             //    9. create an array of the types of exercise that will be used with the select-option in
                 //    form for the user to select the type.
                 types: ['Biking', 'Walking', 'Running', 'Rowing']
+            }
+        },
+    //    15b. add submit method here to allow the submit click button to work from 15a, be sure it's after the data end curly brace
+        methods: {
+            submit(){
+            //    15c. this ^^^ submit button needs to use the data in the vue app (just above) to create an activity record object
+            //     15d. convert date string YEAR-MO-DA (ex.2022-11-04) into a date object vvv:
+                let date = new Date(this.dateString) //will make a date object that represents the calendar date the user has selected.
+            //    15e. Make the activity record object:
+                let record = {
+                    date: date, //not this.date because we created a new object from the Date(this.dateString) called date just above
+                    hours:  this.hours,
+                    type: this.type,
+                    locations: this.locations
+                }
+            //    add the above record ^^^ to the activity record
+                this.activityRecords.push(record)
+                // console.log(this.activityRecords)
             }
         }
     })
