@@ -112,8 +112,11 @@
 
             <div class="card-body">
 
-                <h3> <!-- TODO Display number of records --> records</h3>
-
+<!--                <h3> &lt;!&ndash; TODOne Display number of records &ndash;&gt; records</h3>-->
+<!--                <h3> &lt;!&ndash; 22b. TODOn Display number of records &ndash;&gt; records</h3>-->
+<!--                <h3>{{ totalRecords }} records</h3>-->
+<!--                23b3.-->
+                <h3> {{ totalRecordsMessage }} </h3>
                 <div id="records">
                     <table class="table table-hover">
                         <tr>
@@ -142,8 +145,9 @@
 
             <div class="card-body">
 
-                <!-- TODO add computed property to calculate the total hours -->
-                <p>You have exercised a total of <!-- TODO display total hours --> hours</p>
+                <!-- 24b. TODOne add computed property to calculate the total hours -->
+<!--                <p>You have exercised a total of &lt;!&ndash; TODOne display total hours &ndash;&gt; hours</p>-->
+                <p>You have exercised a total of {{ totalHours }} hours</p>
 
                 <!-- Challenge question! Display a list of the total hours for each type.  -->
             </div>
@@ -235,6 +239,20 @@
                     //    add the above record ^^^ to the activity record
                         this.activityRecords.push(record)
                         // console.log(this.activityRecords)
+                    // 21a. Sort the activity records by date:
+                    //    javascript has the built-in function sort, but javascript doesn't know what goes first:
+                    //    sort takes a function, that has two arguments: record 1 (r1), and record 2 (r2)
+                    //    **javascript will call this function on every pair of records in the activity records array
+                        this.activityRecords.sort(function(r1, r2){
+                            //21b.
+                            //    **what is returned will be used to figure out how things are sorted.
+                            //getTime vvv returns a timestamp, and this return vvv will sort with the oldest records first,
+                            // most recent at the end.:
+                            //getTime() returns a number that is the number of seconds the date is since January 1, 1970
+                            // (https://www.unixtimestamp.com/)
+                            //this will return a positive or negative number that is used to sort the records (behind the scenes)
+                            return r1.date.getTime() - r2.date.getTime()
+                        })
                     }
                 },
                 //20a. Reformat the date information, so it is more readable on the site:(be sure it's after the submit method
@@ -246,6 +264,41 @@
                     // Info on the internatal dateTime constructor:
                     // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/DateTimeFormat
                 //    move on to 20b (used in our template WAY above ^^^^)
+                }
+            },
+        //    22a. Display total number of records by using the activityRecords array from ^^^ way above. Need to place this
+        //    after the methods call (click on curly brace and see where the closed curly brace lights up at the end:
+        //    Work with a computed property
+            computed: {
+            //    name a computed property that will represent the number of records:
+            //     totalRecords() {
+                    // 23b2.
+                totalRecordsMessage() {
+                    // return this.activityRecords.length
+                //    use this in our template (all the way at the top ^^^22b. )
+                //    23a. Modify computed property so 1 record and 2 records (etc.) are shown: grammar:
+                //     if (this.activityRecords.length = 1) {
+                //         return '1 record'
+                //     } else {
+                //         return this.activityRecords. length + 'records'
+                //     }
+                    // 23b1. write this another way
+                    let numberOfRecords = this.activityRecords.length
+
+                    if (numberOfRecords == 1) {
+                        return '1 record'
+                    } else {
+                        return numberOfRecords + ' records'
+                    }
+                },
+                // 24a. Add the total number of hours message:
+                totalHours() {
+                    let total = 0
+                    this.activityRecords.forEach(function(record){
+                        total = total + record.hours
+                    })
+                    return total
+                    //    use this in the template to show the total number of hours ^^ above (24b)
                 }
             }
         })
