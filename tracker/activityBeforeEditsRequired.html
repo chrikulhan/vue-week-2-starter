@@ -11,7 +11,7 @@
 </head>
 
 <body>
-<!--this div will contain all the text/data that vue will work with:-->
+<!--this div will contain all the text/data that view wi-- work with:-->
     <div id="app">
 
         <!-- 5. TODOne display the name of the activity (add mustache syntax)-->
@@ -20,7 +20,7 @@
 
         <div id="add-hours" class="card">
 
-            <h2 class="card-header">Record your activities:</h2>
+            <h2 class="card-header">Add Records</h2>
             <div class="card-body">
                 <!-- 18a. TODOne use v-if to show this if there are validation errors -->
 <!--                <div class="alert alert-danger">-->
@@ -56,15 +56,6 @@
                     </small>
                 </div>
 
-<!--                ActLab2extra-->
-                <div class ="form-group">
-                    <label class="form-label" for="distance">How many miles?</label>
-                    <input id="miles" class="form-control" type="number" min="0" v-model.number="distance">
-                    <small id="miles-help" class="form-text text-muted">
-                        Enter the distance you traveled, more than 0.
-                    </small>
-                </div>
-
                 <div class="form-group">
                     <label class="form-label" for="type">What type of exercise did you do?</label>
                     <!--  TODO Create select element, use v-model to connect to the types (the property created in the let app = Vue.createApp( type:) -->
@@ -82,8 +73,8 @@
                 <div class="form-label pb-2">
                     Where did you exercise?
                 </div>
-
 <!--            Radio buttons, if you select one, the other will unselect!!-->
+
                 <div class="form-check-inline">
 <!--                     TODOne v-model location -->
 <!--                    12a. Add vue model to both radio buttons just below vvv: -->
@@ -131,12 +122,8 @@
                         <tr>
                             <th>Date</th>
                             <th>How many hours?</th>
-                            <th>How far (in miles)?</th>
                             <th>Type</th>
                             <th>Location</th>
-<!--                            ActLab4a.-->
-                            <th>Personal Record</th>
-                            <th>Notes</th>
                         </tr>
                         <!-- 16. TODOne use v-for to create one table row for each activity record -->
                         <tr v-for="record in activityRecords">
@@ -144,13 +131,8 @@
 <!--                            <td> {{ record.date }} </td>-->
                             <td> {{ shortDate(record.date) }} </td>
                             <td> {{ record.hours}} </td>
-<!--                            extra -->
-                            <td> {{ record.distance}} </td>
                             <td> {{ record.type}} </td>
                             <td> {{ record.locations}} </td>
-<!--                            ActLab2b.-->
-                            <td> {{ record.personalRecord}} </td>
-                            <td> {{ record.notes}} </td>
                         </tr>
                     </table>
                 </div>
@@ -166,7 +148,6 @@
                 <!-- 24b. TODOne add computed property to calculate the total hours -->
 <!--                <p>You have exercised a total of &lt;!&ndash; TODOne display total hours &ndash;&gt; hours</p>-->
                 <p>You have exercised a total of {{ totalHours }} hours</p>
-                <p>You have exercisd a total of {{totalDistance}} miles</p>
 
                 <!-- Challenge question! Display a list of the total hours for each type.  -->
             </div>
@@ -192,8 +173,6 @@
                 //     date: '', //empty string
                     dateString: '', //empty string
                     hours: 1, //default value on the form will be 1
-                    // ActLab
-                    distance: 1, //default value will be 1
                     //11. match the type and first types array item
                     type: 'Biking', //if this type matches the first item in the array types (below), this will
                     //show up in the toggle <select> bar as the first one chosen.
@@ -208,7 +187,7 @@
                     errors: [] //empty array
                 }
             },
-        //    15b. add submit method here to allow the submit-click button to work from 15a, be sure it's after the data end curly brace
+        //    15b. add submit method here to allow the submit click button to work from 15a, be sure it's after the data end curly brace
             methods: {
                 submit(){
 
