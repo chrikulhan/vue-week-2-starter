@@ -22,10 +22,14 @@
 
             <h2 class="card-header">Add Records</h2>
             <div class="card-body">
-<!--               pause video 6 8:00 timestamp---starting in on errors arrays and validation-->
-                <!-- TODO use v-if to show this if there are validation errors -->
-                <div class="alert alert-danger">
-                    <!-- TODO show a list of validation errors from form -->
+                <!-- 18a. TODOne use v-if to show this if there are validation errors -->
+<!--                <div class="alert alert-danger">-->
+                    <div class="alert alert-danger" v-if="errors.length > 0">
+                    <!-- 19. TODOne show a list of validation errors from form -->
+                        <ul>
+                           <li v-for="error in errors">{{ error }}</li>
+                        </ul>
+
                 </div>
 
                 <div class="form-group">
@@ -120,7 +124,9 @@
                         </tr>
                         <!-- 16. TODOne use v-for to create one table row for each activity record -->
                         <tr v-for="record in activityRecords">
-                            <td> {{ record.date }} </td>
+<!--                            20b. from method call that formats the date into a readable format:-->
+<!--                            <td> {{ record.date }} </td>-->
+                            <td> {{ shortDate(record.date) }} </td>
                             <td> {{ record.hours}} </td>
                             <td> {{ record.type}} </td>
                             <td> {{ record.locations}} </td>
@@ -148,50 +154,101 @@
 
 <!--        Todone create new Vue app here:-->
 // 1.
-    let app = Vue.createApp({
-        //3. add data:
-        data(){
-            return{
-                //4. create first piece of data, name of type of activity:
-                activity: 'Exercise',
-            //    6. save data that is input in an array:
-                activityRecords: [], //empty array
+        let app = Vue.createApp({
+            //3. add data:
+            data(){
+                return{
+                    //4. create first piece of data, name of type of activity:
+                    activity: 'Exercise',
+                //    6. save data that is input in an array:
+                    activityRecords: [], //empty array
 
-            //    7. add other properties that work with v-model to
-            //     work with the form data:
-            //     14a. rename date to dateString:
-            //     date: '', //empty string
-                dateString: '', //empty string
-                hours: 1, //default value on the form will be 1
-                //11. match the type and first types array item
-                type: 'Biking', //if this type matches the first item in the array types (below), this will
-                //show up in the toggle <select> bar as the first one chosen.
-                locations: 'outside', //clara used medium: for her data
+                //    7. add other properties that work with v-model to
+                //     work with the form data:
+                //     14a. rename date to dateString:
+                //     date: '', //empty string
+                    dateString: '', //empty string
+                    hours: 1, //default value on the form will be 1
+                    //11. match the type and first types array item
+                    type: 'Biking', //if this type matches the first item in the array types (below), this will
+                    //show up in the toggle <select> bar as the first one chosen.
+                    locations: 'Outdoors', //clara used medium: for her data
 
-            //    9. create an array of the types of exercise that will be used with the select-option in
-                //    form for the user to select the type.
-                types: ['Biking', 'Walking', 'Running', 'Rowing']
-            }
-        },
-    //    15b. add submit method here to allow the submit click button to work from 15a, be sure it's after the data end curly brace
-        methods: {
-            submit(){
-            //    15c. this ^^^ submit button needs to use the data in the vue app (just above) to create an activity record object
-            //     15d. convert date string YEAR-MO-DA (ex.2022-11-04) into a date object vvv:
-                let date = new Date(this.dateString) //will make a date object that represents the calendar date the user has selected.
-            //    15e. Make the activity record object:
-                let record = {
-                    date: date, //not this.date because we created a new object from the Date(this.dateString) called date just above
-                    hours:  this.hours,
-                    type: this.type,
-                    locations: this.locations
+                //    9. create an array of the types of exercise that will be used with the select-option in
+                    //    form for the user to select the type.
+                    types: ['Biking', 'Walking', 'Running', 'Rowing'],
+
+                    // 17a.Create an errors array to start validating the input users are going to add
+                    // via the submit method/button
+                    errors: [] //empty array
                 }
-            //    add the above record ^^^ to the activity record
-                this.activityRecords.push(record)
-                // console.log(this.activityRecords)
+            },
+        //    15b. add submit method here to allow the submit click button to work from 15a, be sure it's after the data end curly brace
+            methods: {
+                submit(){
+
+                    // 17b. Working on validation: assume there are no errors.
+                    this.errors = [] //empty array
+
+                //    15c. this ^^^ submit button needs to use the data in the vue app (just above) to create an activity record object
+                //     15d. convert date string YEAR-MO-DA (ex.2022-11-04) into a date object vvv:
+                    let date = new Date(this.dateString) //will make a date object that represents the calendar date the user has selected.
+
+                //    17c1. check all the things that might be wrong:
+                //    makes sure date (just above ^^^) is a valid date: today or in the past:
+                //    when you create a new date object from a date string, if it can't be converted into a date,
+                //    it will be the string in valid date
+                //    (if there is NO this.dateString, or the this.dateString is Invalid Date (spelling exact),
+                    //    or date is greater than new Date, where date is the user selected date.
+                    if (!this.dateString || this.dateString === 'Invalid Date' || date > new Date() ){
+                        //this vvv will push the erros to the errors array (just above), and give a message to the user.
+                        this.errors.push('Select a valid date, today or in the past.')
+                    }
+                    // 17c2. check if hours is less than or equal to zero:
+                    if (this.hours <= 0 || this.hours > 24) {
+                        //push the errors to the array with a message (as above in 17c1.)
+                        this.errors.push('The number of hours must be greater than zero and less than or equal to 24.')
+                    }
+                    // 17c3. check that this.type and this.locations have a selection by the user:
+                    if(!this.type){
+                        this.errors.push('Please select a type of exercise to log.')
+                    }
+                    // 17c4. check that a location was selected:
+                    if(!this.locations){
+                        this.errors.push('Please select the location you exercised.')
+                    }
+                    //at the very top, there is an alert to show a list of validation errors (18, go there)
+
+
+                    // 17c5. Has at least one error been added to the errors array,
+                    // if so something is wrong with the form, and we want to stop.
+                    // However, if there were no errors: proceed vvv to adding the record:
+                    if (this.errors.length ===0){
+                    //    15e. Make the activity record object: (indent let record and add the closed curly
+                    //    brace at the end of let record.
+                        let record = {
+                            date: date, //not this.date because we created a new object from the Date(this.dateString) called date just above
+                            hours:  this.hours,
+                            type: this.type,
+                            locations: this.locations
+                        }
+                    //    add the above record ^^^ to the activity record
+                        this.activityRecords.push(record)
+                        // console.log(this.activityRecords)
+                    }
+                },
+                //20a. Reformat the date information, so it is more readable on the site:(be sure it's after the submit method
+                //    by checking the open and closed curly brace: shortDate(), takes one argument:
+                shortDate(date){
+                    //normal javascript: will return Intl (international date/time format)
+                    //en-US = in english, United States format, UTC = universal time zone
+                    return new Intl.DateTimeFormat('en-US', {timeZone: 'UTC'}).format(date)
+                    // Info on the internatal dateTime constructor:
+                    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/DateTimeFormat
+                //    move on to 20b (used in our template WAY above ^^^^)
+                }
             }
-        }
-    })
+        })
 
 //2.
 app.mount('#app')
