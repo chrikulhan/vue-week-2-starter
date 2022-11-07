@@ -139,7 +139,7 @@
                             <th>Notes</th>
                         </tr>
                         <!-- 16. TODOne use v-for to create one table row for each activity record -->
-                        <tr v-for="record in activityRecords">
+                        <tr v-for="record in activityRecords" v-bind:class=" {exercise: type.exercise} ">
 <!--                            20b. from method call that formats the date into a readable format:-->
 <!--                            <td> {{ record.date }} </td>-->
                             <td> {{ shortDate(record.date) }} </td>
@@ -166,7 +166,7 @@
                 <!-- 24b. TODOne add computed property to calculate the total hours -->
 <!--                <p>You have exercised a total of &lt;!&ndash; TODOne display total hours &ndash;&gt; hours</p>-->
                 <p>You have exercised a total of {{ totalHours }} hours</p>
-                <p>You have exercisd a total of {{totalDistance}} miles</p>
+                <p>You have exercised a total of {{ totalDistance }} miles</p>
 
                 <!-- Challenge question! Display a list of the total hours for each type.  -->
             </div>
@@ -320,6 +320,13 @@
                     })
                     return total
                     //    use this in the template to show the total number of hours ^^ above (24b)
+                },
+                totalDistance() {
+                    let total = 0
+                    this.distance.forEach(function(record){
+                        total = total + record.distance
+                    })
+                    return total
                 }
             }
         })

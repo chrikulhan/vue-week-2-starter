@@ -4,3 +4,29 @@
     scroll instead of making the page very tall.: */
     overflow: scroll;
 }
+.noExercise{
+    color: black;
+}
+
+.biking{
+    color: black;
+    font-style: italic;
+    background-color: green;
+}
+.walking{
+    color: black;
+    font-style: italic;
+    background-color: red;
+}
+
+.running{
+    color: black;
+    font-style: italic;
+    background-color: yellow;
+}
+
+.rowing{
+    color: black;
+    font-style: italic;
+    background-color: orange;
+}
