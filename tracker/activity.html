@@ -108,6 +108,18 @@
                     <label class="form-check-label" for="location2">Indoors</label>
                 </div>
 
+                <div class="form-check-inline">
+                    <input id="personalRecord" class="form-check-input" type="checkbox" value="Personal Record?" v-model="personalRecord">
+                </div>
+
+<!--                vvv from: https://getbootstrap.com/docs/4.0/components/forms/-->
+
+                </div>
+                <div class="form-group">
+                    <label for="notes">Notes:</label>
+                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                </div>
+
                 <div>
                     <!-- 15a. TODOne Add v-on:click , (then move to vue app to add a submit method)-->
 <!--                    <button class="btn btn-primary mt-2" type="button">Add record</button>-->
@@ -139,7 +151,7 @@
                             <th>Notes</th>
                         </tr>
                         <!-- 16. TODOne use v-for to create one table row for each activity record -->
-                        <tr v-for="record in activityRecords" v-bind:class=" {exercise: type.exercise} ">
+                        <tr v-for="record in activityRecords" v-bind:class=" {type: exercise.type} ">
 <!--                            20b. from method call that formats the date into a readable format:-->
 <!--                            <td> {{ record.date }} </td>-->
                             <td> {{ shortDate(record.date) }} </td>
@@ -202,6 +214,8 @@
                 //    9. create an array of the types of exercise that will be used with the select-option in
                     //    form for the user to select the type.
                     types: ['Biking', 'Walking', 'Running', 'Rowing'],
+                    notes: "Enter notes about your exercise here",
+                    personalRecord:,
 
                     // 17a.Create an errors array to start validating the input users are going to add
                     // via the submit method/button
@@ -253,9 +267,11 @@
                     //    brace at the end of let record.
                         let record = {
                             date: date, //not this.date because we created a new object from the Date(this.dateString) called date just above
-                            hours:  this.hours,
+                            hours: this.hours,
+                            distance: this.distance,
                             type: this.type,
-                            locations: this.locations
+                            locations: this.locations,
+                            notes: this.notes
                         }
                     //    add the above record ^^^ to the activity record
                         this.activityRecords.push(record)
@@ -274,6 +290,9 @@
                             //this will return a positive or negative number that is used to sort the records (behind the scenes)
                             return r1.date.getTime() - r2.date.getTime()
                         })
+                    }
+                    // ,colorCodeExercise(activityRecords){
+
                     }
                 },
                 //20a. Reformat the date information, so it is more readable on the site:(be sure it's after the submit method
