@@ -58,8 +58,8 @@
 
 <!--                ActLab2extra-->
                 <div class ="form-group">
-                    <label class="form-label" for="distance">How many miles?</label>
-                    <input id="miles" class="form-control" type="number" min="0" v-model.number="distance">
+                    <label class="form-label">How many miles?</label>
+                    <input id="miles" class="form-control" type="number" min="0">
                     <small id="miles-help" class="form-text text-muted">
                         Enter the distance you traveled, more than 0.
                     </small>
@@ -106,18 +106,27 @@
 <!--                    13b2.Set a value and display some text:-->
 <!--                    <label class="form-check-label" for="location2">  TODOne Display text </label>-->
                     <label class="form-check-label" for="location2">Indoors</label>
+                    <br>
+                    <br>
                 </div>
-
-                <div class="form-check-inline">
-                    <input id="personalRecord" class="form-check-input" type="checkbox" value="Personal Record?" v-model="personalRecord">
-                </div>
-
-<!--                vvv from: https://getbootstrap.com/docs/4.0/components/forms/-->
 
                 </div>
                 <div class="form-group">
                     <label for="notes">Notes:</label>
                     <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                </div>
+
+                <!--vvv from: https://getbootstrap.com/docs/4.0/components/forms/-->
+
+                <div class="form-label pb-2">
+                    Was this a personal record for you?
+                </div>
+
+                <div class="form-check-inline" >
+                    <input id="personalRecord" class="form-check-input" type="checkbox" value="Personal Record?" v-model="personalRecord">
+                    <label class="form-check-label" for="personalRecord">Personal Record</label>
+                    <br>
+                    <br>
                 </div>
 
                 <div>
@@ -155,14 +164,14 @@
 <!--                            20b. from method call that formats the date into a readable format:-->
 <!--                            <td> {{ record.date }} </td>-->
                             <td> {{ shortDate(record.date) }} </td>
-                            <td> {{ record.hours}} </td>
+                            <td> {{ record.hours }} </td>
 <!--                            extra -->
-                            <td> {{ record.distance}} </td>
-                            <td> {{ record.type}} </td>
-                            <td> {{ record.locations}} </td>
+                            <td> {{ record.distance }} </td>
+                            <td> {{ record.type }} </td>
+                            <td> {{ record.locations }} </td>
 <!--                            ActLab2b.-->
-                            <td> {{ record.personalRecord}} </td>
-                            <td> {{ record.notes}} </td>
+                            <td> {{ record.personalRecord }} </td>
+                            <td> {{ record.notes }} </td>
                         </tr>
                     </table>
                 </div>
@@ -215,7 +224,7 @@
                     //    form for the user to select the type.
                     types: ['Biking', 'Walking', 'Running', 'Rowing'],
                     notes: "Enter notes about your exercise here",
-                    personalRecord:,
+                    personalRecord:
 
                     // 17a.Create an errors array to start validating the input users are going to add
                     // via the submit method/button
@@ -229,15 +238,15 @@
                     // 17b. Working on validation: assume there are no errors.
                     this.errors = [] //empty array
 
-                //    15c. this ^^^ submit button needs to use the data in the vue app (just above) to create an activity record object
-                //     15d. convert date string YEAR-MO-DA (ex.2022-11-04) into a date object vvv:
+                    //    15c. this ^^^ submit button needs to use the data in the vue app (just above) to create an activity record object
+                    //     15d. convert date string YEAR-MO-DA (ex.2022-11-04) into a date object vvv:
                     let date = new Date(this.dateString) //will make a date object that represents the calendar date the user has selected.
 
-                //    17c1. check all the things that might be wrong:
-                //    makes sure date (just above ^^^) is a valid date: today or in the past:
-                //    when you create a new date object from a date string, if it can't be converted into a date,
-                //    it will be the string in valid date
-                //    (if there is NO this.dateString, or the this.dateString is Invalid Date (spelling exact),
+                    //    17c1. check all the things that might be wrong:
+                    //    makes sure date (just above ^^^) is a valid date: today or in the past:
+                    //    when you create a new date object from a date string, if it can't be converted into a date,
+                    //    it will be the string in valid date
+                    //    (if there is NO this.dateString, or the this.dateString is Invalid Date (spelling exact),
                     //    or date is greater than new Date, where date is the user selected date.
                     if (!this.dateString || this.dateString === 'Invalid Date' || date > new Date() ){
                         //this vvv will push the erros to the errors array (just above), and give a message to the user.
@@ -247,6 +256,9 @@
                     if (this.hours <= 0 || this.hours > 24) {
                         //push the errors to the array with a message (as above in 17c1.)
                         this.errors.push('The number of hours must be greater than zero and less than or equal to 24.')
+                    }
+                    if (this.distance <=0) {
+                        this.errors.push('The number of miles must be greater than zero.')
                     }
                     // 17c3. check that this.type and this.locations have a selection by the user:
                     if(!this.type){
@@ -266,20 +278,20 @@
                     //    15e. Make the activity record object: (indent let record and add the closed curly
                     //    brace at the end of let record.
                         let record = {
-                            date: date, //not this.date because we created a new object from the Date(this.dateString) called date just above
-                            hours: this.hours,
-                            distance: this.distance,
-                            type: this.type,
-                            locations: this.locations,
-                            notes: this.notes
+                        date: date, //not this.date because we created a new object from the Date(this.dateString) called date just above
+                        hours: this.hours,
+                        distance: this.distance,
+                        type: this.type,
+                        locations: this.locations,
+                        notes: this.notes
                         }
-                    //    add the above record ^^^ to the activity record
+                        //    add the above record ^^^ to the activity record
                         this.activityRecords.push(record)
-                        // console.log(this.activityRecords)
-                    // 21a. Sort the activity records by date:
-                    //    javascript has the built-in function sort, but javascript doesn't know what goes first:
-                    //    sort takes a function, that has two arguments: record 1 (r1), and record 2 (r2)
-                    //    **javascript will call this function on every pair of records in the activity records array
+                            // console.log(this.activityRecords)
+                        // 21a. Sort the activity records by date:
+                        //    javascript has the built-in function sort, but javascript doesn't know what goes first:
+                        //    sort takes a function, that has two arguments: record 1 (r1), and record 2 (r2)
+                        //    **javascript will call this function on every pair of records in the activity records array
                         this.activityRecords.sort(function(r1, r2){
                             //21b.
                             //    **what is returned will be used to figure out how things are sorted.
@@ -291,17 +303,15 @@
                             return r1.date.getTime() - r2.date.getTime()
                         })
                     }
-                    // ,colorCodeExercise(activityRecords){
-
-                    }
-                },
+                }
+            },
                 //20a. Reformat the date information, so it is more readable on the site:(be sure it's after the submit method
                 //    by checking the open and closed curly brace: shortDate(), takes one argument:
                 shortDate(date){
                     //normal javascript: will return Intl (international date/time format)
                     //en-US = in english, United States format, UTC = universal time zone
                     return new Intl.DateTimeFormat('en-US', {timeZone: 'UTC'}).format(date)
-                    // Info on the internatal dateTime constructor:
+                    // Info on the international dateTime constructor:
                     // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/DateTimeFormat
                 //    move on to 20b (used in our template WAY above ^^^^)
                 }
