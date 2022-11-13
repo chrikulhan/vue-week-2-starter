@@ -58,7 +58,7 @@
 <!--                ActLab2extra-->
                 <div class ="form-group">
                     <label class="form-label">How many miles?</label>
-                    <input id="miles" class="form-control" type="number" min="0" v-model.number="distance">
+                    <input id="miles" class="form-control" type="number" min="0" v-model.number="miles">
                     <small id="miles-help" class="form-text text-muted">
                         Enter the distance you traveled, more than 0.
                     </small>
@@ -105,28 +105,34 @@
 <!--                    13b2.Set a value and display some text:-->
 <!--                    <label class="form-check-label" for="location2">  TODOne Display text </label>-->
                     <label class="form-check-label" for="location2">Indoors</label>
-                    <br>
-                    <br>
                 </div>
 
                 </div>
-                <div class="form-group">
-                    <label for="notes">Notes:</label>
-                    <textarea id="exampleFormControlTextarea1" class="form-control" type="text" rows="3" v-model="notes"></textarea>
+                <div class="form-group">Notes:
+                    <textarea id="notes" class="form-control" type="text" rows="3" v-model="notes"
+                              placeholder = "Enter notes about your exercise here" ></textarea>
+<!--                              https://vuejs.org/guide/essentials/forms.html (placeholder)-->
                 </div>
 
                 <!--vvv from: https://getbootstrap.com/docs/4.0/components/forms/-->
+<!--            https://vuejs.org/guide/essentials/forms.html (checkbox)-->
 
-                <div class="form-label pb-2">
-                    Was this a personal record for you?
-                </div>
+<!--                <div class="form-label pb-2">-->
+<!--                    Was this a personal record for you?-->
+<!--                </div>-->
 
-                <div class="form-check-inline" >
-                    <input id="personalRecord" class="form-check-input" type="checkbox" value="Personal Record?" v-model="personalRecord">
+                <div class="form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="personalRecord" v-model="personalRecord" />
                     <label class="form-check-label" for="personalRecord">Personal Record</label>
-                    <br>
-                    <br>
                 </div>
+
+
+<!--                <div class="form-check-inline" >-->
+<!--                    <input id="personalRecord" class="form-check-input" type="checkbox" value="Personal Record?" v-model="personalRecord">-->
+<!--                    <label class="form-check-label" for="personalRecord">Personal Record</label>-->
+<!--                    <br>-->
+<!--                    <br>-->
+<!--                </div>-->
 
                 <div>
                     <!-- 15a. TODOne Add v-on:click , (then move to vue app to add a submit method)-->
@@ -165,7 +171,7 @@
                             <td> {{ shortDate(record.date) }} </td>
                             <td> {{ record.hours }} </td>
 <!--                            extra -->
-                            <td> {{ record.distance }} </td>
+                            <td> {{ record.miles }} </td>
                             <td> {{ record.kind }} </td>
                             <td> {{ record.locations }} </td>
 <!--                            ActLab2b.-->
@@ -186,7 +192,7 @@
                 <!-- 24b. TODOne add computed property to calculate the total hours -->
 <!--                <p>You have exercised a total of &lt;!&ndash; TODOne display total hours &ndash;&gt; hours</p>-->
                 <p>You have exercised a total of {{ totalHours }} hours</p>
-                <p>You have exercised a total of {{ totalDistance }} miles</p>
+                <p>You have exercised a total of {{ totalMiles }} miles</p>
 
                 <!-- Challenge question! Display a list of the total hours for each type.  -->
             </div>
@@ -213,7 +219,7 @@
                     dateString: '', //empty string
                     hours: 1, //default value on the form will be 1
                     // ActLab
-                    distance: 1, //default value will be 1
+                    miles: 1, //default value will be 1
                     //11. match the kind and first kinds array item
                     kind: 'Biking', //if this kind matches the first item in the array types (below), this will
                     //show up in the toggle <select> bar as the first one chosen.
@@ -222,7 +228,7 @@
                 //    9. create an array of the kinds of exercise that will be used with the select-option in
                     //    form for the user to select the kind.
                     kinds: ['Biking', 'Walking', 'Running', 'Rowing'],
-                    notes: "Enter notes about your exercise here",
+                    notes: "",
                     personalRecord: "",
 
                     // 17a.Create an errors array to start validating the input users are going to add
@@ -256,7 +262,7 @@
                         //push the errors to the array with a message (as above in 17c1.)
                         this.errors.push('The number of hours must be greater than zero and less than or equal to 24.')
                     }
-                    if (this.distance <=0) {
+                    if (this.miles <=0) {
                         this.errors.push('The number of miles must be greater than zero.')
                     }
                     // 17c3. check that this.kind and this.locations have a selection by the user:
@@ -279,7 +285,7 @@
                         let record = {
                             date: date, //not this.date because we created a new object from the Date(this.dateString) called date just above
                             hours: this.hours,
-                            distance: this.distance,
+                            miles: this.miles,
                             kind: this.kind,
                             locations: this.locations,
                             notes: this.notes
@@ -333,7 +339,7 @@
                     // 23b1. write this another way
                     let numberOfRecords = this.activityRecords.length
 
-                    if (numberOfRecords == 1) {
+                    if (numberOfRecords === 1) {
                         return '1 record'
                     } else {
                         return numberOfRecords + ' records'
@@ -348,10 +354,10 @@
                     return total
                     //    use this in the template to show the total number of hours ^^ above (24b)
                 },
-                totalDistance() {
+                totalMiles() {
                     let total = 0
                     this.activityRecords.forEach(function(record){
-                        total = total + record.distance
+                        total = total + record.miles
                     })
                     return total
                 }
