@@ -57,7 +57,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="form-label" for="type">What type of exercise did you do?</label>
+                    <label class="form-label" for="type">What kind of exercise did you do?</label>
                     <!--  TODO Create select element, use v-model to connect to the types (the property created in the let app = Vue.createApp( type:) -->
 
                     <!-- 10. TODOne Use v-for to create option elements, one for each type -->
@@ -65,8 +65,8 @@
                         **when you use v-model with type, whatever the choice is will be whatever the type is set to: -->
                     <select class="form-control" v-model="type">
 <!--                        11. set up our options using v-for because there might be MANY options-->
-<!--                        v-for will duplicatet this option once for every activity type in the types array: -->
-                        <option v-for="activityType in types">{{ activityType }}</option>
+<!--                        v-for will duplicate this option once for every activity kind in the kinds array: -->
+                        <option v-for="activityKind in kinds">{{ activityKind }}</option>
                     </select>
                 </div>
 
@@ -122,7 +122,7 @@
                         <tr>
                             <th>Date</th>
                             <th>How many hours?</th>
-                            <th>Type</th>
+                            <th>Kind</th>
                             <th>Location</th>
                         </tr>
                         <!-- 16. TODOne use v-for to create one table row for each activity record -->
@@ -131,7 +131,7 @@
 <!--                            <td> {{ record.date }} </td>-->
                             <td> {{ shortDate(record.date) }} </td>
                             <td> {{ record.hours}} </td>
-                            <td> {{ record.type}} </td>
+                            <td> {{ record.kinds}} </td>
                             <td> {{ record.locations}} </td>
                         </tr>
                     </table>
@@ -173,14 +173,14 @@
                 //     date: '', //empty string
                     dateString: '', //empty string
                     hours: 1, //default value on the form will be 1
-                    //11. match the type and first types array item
-                    type: 'Biking', //if this type matches the first item in the array types (below), this will
+                    //11. match the kind and first kinds array item
+                    kind: 'Biking', //if this kind matches the first item in the array kinds (below), this will
                     //show up in the toggle <select> bar as the first one chosen.
                     locations: 'Outdoors', //clara used medium: for her data
 
-                //    9. create an array of the types of exercise that will be used with the select-option in
-                    //    form for the user to select the type.
-                    types: ['Biking', 'Walking', 'Running', 'Rowing'],
+                //    9. create an array of the kinds of exercise that will be used with the select-option in
+                    //    form for the user to select the kind.
+                    kinds: ['Biking', 'Walking', 'Running', 'Rowing'],
 
                     // 17a.Create an errors array to start validating the input users are going to add
                     // via the submit method/button
@@ -213,9 +213,9 @@
                         //push the errors to the array with a message (as above in 17c1.)
                         this.errors.push('The number of hours must be greater than zero and less than or equal to 24.')
                     }
-                    // 17c3. check that this.type and this.locations have a selection by the user:
-                    if(!this.type){
-                        this.errors.push('Please select a type of exercise to log.')
+                    // 17c3. check that this.kind and this.locations have a selection by the user:
+                    if(!this.kinds){
+                        this.errors.push('Please select a kind of exercise to log.')
                     }
                     // 17c4. check that a location was selected:
                     if(!this.locations){
@@ -233,7 +233,7 @@
                         let record = {
                             date: date, //not this.date because we created a new object from the Date(this.dateString) called date just above
                             hours:  this.hours,
-                            type: this.type,
+                            kinds: this.kinds,
                             locations: this.locations
                         }
                     //    add the above record ^^^ to the activity record

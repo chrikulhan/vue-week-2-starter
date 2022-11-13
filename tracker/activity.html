@@ -66,16 +66,16 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="form-label" for="type">What type of exercise did you do?</label>
+                    <label class="form-label" for="kind">What kind of exercise did you do?</label>
                     <!--  TODO Create select element, use v-model to connect to the types (the property created in the let app = Vue.createApp( type:) -->
 
                     <!-- 10. TODOne Use v-for to create option elements, one for each type -->
 <!--                    bootstrap class form control will make this consistent with other components:
                         **when you use v-model with type, whatever the choice is will be whatever the type is set to: -->
-                    <select class="form-control" v-model="type">
+                    <select class="form-control" v-model="kind">
 <!--                        11. set up our options using v-for because there might be MANY options-->
-<!--                        v-for will duplicatet this option once for every activity type in the types array: -->
-                        <option v-for="activityType in types">{{ activityType }}</option>
+<!--                        v-for will duplicatet this option once for every activity kind in the kinds array: -->
+                        <option v-for="activityKind in kinds">{{ activityKind }}</option>
                     </select>
                 </div>
 
@@ -153,21 +153,21 @@
                             <th>Date</th>
                             <th>How many hours?</th>
                             <th>How far (in miles)?</th>
-                            <th>Type</th>
+                            <th>Kind</th>
                             <th>Location</th>
 <!--                            ActLab4a.-->
                             <th>Personal Record</th>
                             <th>Notes</th>
                         </tr>
                         <!-- 16. TODOne use v-for to create one table row for each activity record -->
-                        <tr v-for="record in activityRecords" v-bind:class=" {type: exercise.type} ">
+                        <tr v-for="record in activityRecords" v-bind:class=" {kind: exercise.kind} ">
 <!--                            20b. from method call that formats the date into a readable format:-->
 <!--                            <td> {{ record.date }} </td>-->
                             <td> {{ shortDate(record.date) }} </td>
                             <td> {{ record.hours }} </td>
 <!--                            extra -->
                             <td> {{ record.distance }} </td>
-                            <td> {{ record.type }} </td>
+                            <td> {{ record.kinds }} </td>
                             <td> {{ record.locations }} </td>
 <!--                            ActLab2b.-->
                             <td> {{ record.personalRecord }} </td>
@@ -215,16 +215,16 @@
                     hours: 1, //default value on the form will be 1
                     // ActLab
                     distance: 1, //default value will be 1
-                    //11. match the type and first types array item
-                    type: 'Biking', //if this type matches the first item in the array types (below), this will
+                    //11. match the kind and first kinds array item
+                    kinds: 'Biking', //if this kind matches the first item in the array types (below), this will
                     //show up in the toggle <select> bar as the first one chosen.
                     locations: 'Outdoors', //clara used medium: for her data
 
-                //    9. create an array of the types of exercise that will be used with the select-option in
-                    //    form for the user to select the type.
-                    types: ['Biking', 'Walking', 'Running', 'Rowing'],
+                //    9. create an array of the kinds of exercise that will be used with the select-option in
+                    //    form for the user to select the kind.
+                    kinds: ['Biking', 'Walking', 'Running', 'Rowing'],
                     notes: "Enter notes about your exercise here",
-                    personalRecord:
+                    personalRecord: "",
 
                     // 17a.Create an errors array to start validating the input users are going to add
                     // via the submit method/button
@@ -260,9 +260,9 @@
                     if (this.distance <=0) {
                         this.errors.push('The number of miles must be greater than zero.')
                     }
-                    // 17c3. check that this.type and this.locations have a selection by the user:
-                    if(!this.type){
-                        this.errors.push('Please select a type of exercise to log.')
+                    // 17c3. check that this.kind and this.locations have a selection by the user:
+                    if(!this.kinds){
+                        this.errors.push('Please select a kind of exercise to log.')
                     }
                     // 17c4. check that a location was selected:
                     if(!this.locations){
@@ -281,7 +281,7 @@
                         date: date, //not this.date because we created a new object from the Date(this.dateString) called date just above
                         hours: this.hours,
                         distance: this.distance,
-                        type: this.type,
+                        kinds: this.kinds,
                         locations: this.locations,
                         notes: this.notes
                         }
