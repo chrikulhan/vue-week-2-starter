@@ -11,7 +11,7 @@
 </head>
 
 <body>
-<!--this div will contain all the text/data that view wi-- work with:-->
+<!--this div will contain all the text/data that vue will work with:-->
     <div id="app">
 
         <!-- 5. TODOne display the name of the activity (add mustache syntax)-->
@@ -235,13 +235,13 @@
                             kind: this.kind,
                             locations: this.locations
                         }
-                    //    add the above record ^^^ to the activity record
+                        //    add the above record ^^^ to the activity record
                         this.activityRecords.push(record)
-                        // console.log(this.activityRecords)
-                    // 21a. Sort the activity records by date:
-                    //    javascript has the built-in function sort, but javascript doesn't know what goes first:
-                    //    sort takes a function, that has two arguments: record 1 (r1), and record 2 (r2)
-                    //    **javascript will call this function on every pair of records in the activity records array
+                            // console.log(this.activityRecords)
+                        // 21a. Sort the activity records by date:
+                        //    javascript has the built-in function sort, but javascript doesn't know what goes first:
+                        //    sort takes a function, that has two arguments: record 1 (r1), and record 2 (r2)
+                        //    **javascript will call this function on every pair of records in the activity records array
                         this.activityRecords.sort(function(r1, r2){
                             //21b.
                             //    **what is returned will be used to figure out how things are sorted.
@@ -260,7 +260,7 @@
                     //normal javascript: will return Intl (international date/time format)
                     //en-US = in english, United States format, UTC = universal time zone
                     return new Intl.DateTimeFormat('en-US', {timeZone: 'UTC'}).format(date)
-                    // Info on the internatal dateTime constructor:
+                    // Info on the international dateTime constructor:
                     // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/DateTimeFormat
                 //    move on to 20b (used in our template WAY above ^^^^)
                 }

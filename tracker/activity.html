@@ -29,7 +29,6 @@
                         <ul>
                            <li v-for="error in errors">{{ error }}</li>
                         </ul>
-
                 </div>
 
                 <div class="form-group">
@@ -59,22 +58,22 @@
 <!--                ActLab2extra-->
                 <div class ="form-group">
                     <label class="form-label">How many miles?</label>
-                    <input id="miles" class="form-control" type="number" min="0">
+                    <input id="miles" class="form-control" type="number" min="0" v-model.number="distance">
                     <small id="miles-help" class="form-text text-muted">
                         Enter the distance you traveled, more than 0.
                     </small>
                 </div>
 
                 <div class="form-group">
-                    <label class="form-label" for="kind">What kind of exercise did you do?</label>
+                    <label class="form-label" for="type">What kind of exercise did you do?</label>
                     <!--  TODO Create select element, use v-model to connect to the types (the property created in the let app = Vue.createApp( type:) -->
 
                     <!-- 10. TODOne Use v-for to create option elements, one for each type -->
 <!--                    bootstrap class form control will make this consistent with other components:
                         **when you use v-model with type, whatever the choice is will be whatever the type is set to: -->
-                    <select class="form-control" v-model="kind">
+                    <select class="form-control" v-model="type">
 <!--                        11. set up our options using v-for because there might be MANY options-->
-<!--                        v-for will duplicatet this option once for every activity kind in the kinds array: -->
+<!--                        v-for will duplicate this option once for every activity kind in the kinds array: -->
                         <option v-for="activityKind in kinds">{{ activityKind }}</option>
                     </select>
                 </div>
@@ -82,8 +81,8 @@
                 <div class="form-label pb-2">
                     Where did you exercise?
                 </div>
-
 <!--            Radio buttons, if you select one, the other will unselect!!-->
+
                 <div class="form-check-inline">
 <!--                     TODOne v-model location -->
 <!--                    12a. Add vue model to both radio buttons just below vvv: -->
@@ -113,7 +112,7 @@
                 </div>
                 <div class="form-group">
                     <label for="notes">Notes:</label>
-                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                    <textarea id="exampleFormControlTextarea1" class="form-control" type="text" rows="3" v-model="notes"></textarea>
                 </div>
 
                 <!--vvv from: https://getbootstrap.com/docs/4.0/components/forms/-->
@@ -160,14 +159,14 @@
                             <th>Notes</th>
                         </tr>
                         <!-- 16. TODOne use v-for to create one table row for each activity record -->
-                        <tr v-for="record in activityRecords" v-bind:class=" {kind: exercise.kind} ">
+                        <tr v-for="record in activityRecords">
 <!--                            20b. from method call that formats the date into a readable format:-->
 <!--                            <td> {{ record.date }} </td>-->
                             <td> {{ shortDate(record.date) }} </td>
                             <td> {{ record.hours }} </td>
 <!--                            extra -->
                             <td> {{ record.distance }} </td>
-                            <td> {{ record.kinds }} </td>
+                            <td> {{ record.kind }} </td>
                             <td> {{ record.locations }} </td>
 <!--                            ActLab2b.-->
                             <td> {{ record.personalRecord }} </td>
@@ -216,7 +215,7 @@
                     // ActLab
                     distance: 1, //default value will be 1
                     //11. match the kind and first kinds array item
-                    kinds: 'Biking', //if this kind matches the first item in the array types (below), this will
+                    kind: 'Biking', //if this kind matches the first item in the array types (below), this will
                     //show up in the toggle <select> bar as the first one chosen.
                     locations: 'Outdoors', //clara used medium: for her data
 
@@ -261,7 +260,7 @@
                         this.errors.push('The number of miles must be greater than zero.')
                     }
                     // 17c3. check that this.kind and this.locations have a selection by the user:
-                    if(!this.kinds){
+                    if(!this.kind){
                         this.errors.push('Please select a kind of exercise to log.')
                     }
                     // 17c4. check that a location was selected:
@@ -278,12 +277,12 @@
                     //    15e. Make the activity record object: (indent let record and add the closed curly
                     //    brace at the end of let record.
                         let record = {
-                        date: date, //not this.date because we created a new object from the Date(this.dateString) called date just above
-                        hours: this.hours,
-                        distance: this.distance,
-                        kinds: this.kinds,
-                        locations: this.locations,
-                        notes: this.notes
+                            date: date, //not this.date because we created a new object from the Date(this.dateString) called date just above
+                            hours: this.hours,
+                            distance: this.distance,
+                            kind: this.kind,
+                            locations: this.locations,
+                            notes: this.notes
                         }
                         //    add the above record ^^^ to the activity record
                         this.activityRecords.push(record)
@@ -303,8 +302,7 @@
                             return r1.date.getTime() - r2.date.getTime()
                         })
                     }
-                }
-            },
+                },
                 //20a. Reformat the date information, so it is more readable on the site:(be sure it's after the submit method
                 //    by checking the open and closed curly brace: shortDate(), takes one argument:
                 shortDate(date){
@@ -344,7 +342,7 @@
                 // 24a. Add the total number of hours message:
                 totalHours() {
                     let total = 0
-                    this.activityRecords.forEach(function(record){
+                     this.activityRecords.forEach(function(record){
                         total = total + record.hours
                     })
                     return total
@@ -352,7 +350,7 @@
                 },
                 totalDistance() {
                     let total = 0
-                    this.distance.forEach(function(record){
+                    this.activityRecords.forEach(function(record){
                         total = total + record.distance
                     })
                     return total
