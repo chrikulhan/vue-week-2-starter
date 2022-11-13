@@ -29,7 +29,6 @@
                         <ul>
                            <li v-for="error in errors">{{ error }}</li>
                         </ul>
-
                 </div>
 
                 <div class="form-group">
@@ -131,7 +130,7 @@
 <!--                            <td> {{ record.date }} </td>-->
                             <td> {{ shortDate(record.date) }} </td>
                             <td> {{ record.hours}} </td>
-                            <td> {{ record.kinds}} </td>
+                            <td> {{ record.kind}} </td>
                             <td> {{ record.locations}} </td>
                         </tr>
                     </table>
@@ -214,7 +213,7 @@
                         this.errors.push('The number of hours must be greater than zero and less than or equal to 24.')
                     }
                     // 17c3. check that this.kind and this.locations have a selection by the user:
-                    if(!this.kinds){
+                    if(!this.kind){
                         this.errors.push('Please select a kind of exercise to log.')
                     }
                     // 17c4. check that a location was selected:
@@ -233,7 +232,7 @@
                         let record = {
                             date: date, //not this.date because we created a new object from the Date(this.dateString) called date just above
                             hours:  this.hours,
-                            kinds: this.kinds,
+                            kind: this.kind,
                             locations: this.locations
                         }
                     //    add the above record ^^^ to the activity record
