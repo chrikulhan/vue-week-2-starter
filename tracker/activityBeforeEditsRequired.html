@@ -32,7 +32,7 @@
                 </div>
 
                 <div class="form-group">
-                    <!-- TODO display name of activity in the label -->
+                    <!-- TODOne display name of activity in the label -->
                     <label class="form-label" for="date">What date did you do this activity?</label>
                     <!-- 14b. TODOne use v-model to connect this input to dateString data -->
 <!--                    <input id="date" class="form-control" type="date">-->
@@ -56,13 +56,13 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="form-label" for="type">What kind of exercise did you do?</label>
+                    <label class="form-label" for="kind">What kind of exercise did you do?</label>
                     <!--  TODO Create select element, use v-model to connect to the types (the property created in the let app = Vue.createApp( type:) -->
 
                     <!-- 10. TODOne Use v-for to create option elements, one for each type -->
 <!--                    bootstrap class form control will make this consistent with other components:
                         **when you use v-model with type, whatever the choice is will be whatever the type is set to: -->
-                    <select class="form-control" v-model="type">
+                    <select class="form-control" v-model="kind">
 <!--                        11. set up our options using v-for because there might be MANY options-->
 <!--                        v-for will duplicate this option once for every activity kind in the kinds array: -->
                         <option v-for="activityKind in kinds">{{ activityKind }}</option>
@@ -226,7 +226,7 @@
                     // 17c5. Has at least one error been added to the errors array,
                     // if so something is wrong with the form, and we want to stop.
                     // However, if there were no errors: proceed vvv to adding the record:
-                    if (this.errors.length ===0){
+                    if (this.errors.length === 0){
                     //    15e. Make the activity record object: (indent let record and add the closed curly
                     //    brace at the end of let record.
                         let record = {

@@ -65,13 +65,13 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="form-label" for="type">What kind of exercise did you do?</label>
+                    <label class="form-label" for="kinds">What kind of exercise did you do?</label>
                     <!--  TODO Create select element, use v-model to connect to the types (the property created in the let app = Vue.createApp( type:) -->
 
                     <!-- 10. TODOne Use v-for to create option elements, one for each type -->
 <!--                    bootstrap class form control will make this consistent with other components:
                         **when you use v-model with type, whatever the choice is will be whatever the type is set to: -->
-                    <select class="form-control" v-model="type">
+                    <select class="form-control" v-model="kinds">
 <!--                        11. set up our options using v-for because there might be MANY options-->
 <!--                        v-for will duplicate this option once for every activity kind in the kinds array: -->
                         <option v-for="activityKind in kinds">{{ activityKind }}</option>
@@ -172,7 +172,7 @@
                             <td> {{ record.hours }} </td>
 <!--                            extra -->
                             <td> {{ record.miles }} </td>
-                            <td> {{ record.kind }} </td>
+                            <td> {{ record.kinds }} </td>
                             <td> {{ record.locations }} </td>
 <!--                            ActLab2b.-->
                             <td> {{ record.personalRecord }} </td>
@@ -266,7 +266,7 @@
                         this.errors.push('The number of miles must be greater than zero.')
                     }
                     // 17c3. check that this.kind and this.locations have a selection by the user:
-                    if(!this.kind){
+                    if(!this.kinds){
                         this.errors.push('Please select a kind of exercise to log.')
                     }
                     // 17c4. check that a location was selected:
@@ -286,7 +286,7 @@
                             date: date, //not this.date because we created a new object from the Date(this.dateString) called date just above
                             hours: this.hours,
                             miles: this.miles,
-                            kind: this.kind,
+                            kind: this.kinds,
                             locations: this.locations,
                             notes: this.notes
                         }
