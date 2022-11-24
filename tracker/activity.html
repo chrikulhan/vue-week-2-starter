@@ -71,7 +71,7 @@
                     <!-- 10. TODOne Use v-for to create option elements, one for each type -->
 <!--                    bootstrap class form control will make this consistent with other components:
                         **when you use v-model with type, whatever the choice is will be whatever the type is set to: -->
-                    <select class="form-control" v-model="kinds">
+                    <select class="form-control" v-model="kind">  <!-- singular kind-->
 <!--                        11. set up our options using v-for because there might be MANY options-->
 <!--                        v-for will duplicate this option once for every activity kind in the kinds array: -->
                         <option v-for="activityKind in kinds">{{ activityKind }}</option>
@@ -140,7 +140,7 @@
                     <button class="btn btn-primary mt-2" type="button" v-on:click="submit">Add record</button>
                 </div>
             </div>
-        </div>
+        <!-- </div> -->  <!-- remove extra  close div -->
 
         <div class="card">
             <h2 class="card-header">Activity Records</h2>
@@ -165,18 +165,18 @@
                             <th>Notes</th>
                         </tr>
                         <!-- 16. TODOne use v-for to create one table row for each activity record -->
-                        <tr v-for="record in activityRecords">
+                        <tr v-for="record in activityRecords" v-bind:class="record.kind.toLowerCase()">
 <!--                            20b. from method call that formats the date into a readable format:-->
 <!--                            <td> {{ record.date }} </td>-->
                             <td> {{ shortDate(record.date) }} </td>
                             <td> {{ record.hours }} </td>
 <!--                            extra -->
                             <td> {{ record.miles }} </td>
-                            <td> {{ record.kinds }} </td>
+                            <td> {{ record.kind }} </td>  <!-- singular -->
                             <td> {{ record.locations }} </td>
 <!--                            ActLab2b.-->
                             <td> {{ record.personalRecord }} </td>
-                            <td> {{ record.notes }} </td>
+                            <td> {{ shortNotes(record.notes) }} </td>
                         </tr>
                     </table>
                 </div>
@@ -201,7 +201,8 @@
 
     <script>
 
-<!--        Todone create new Vue app here:-->
+// comments in the script use JavaScript // syntax
+// <!--        Todone create new Vue app here:-->
 // 1.
         let app = Vue.createApp({
             //3. add data:
@@ -224,7 +225,7 @@
                     kind: 'Biking', //if this kind matches the first item in the array types (below), this will
                     //show up in the toggle <select> bar as the first one chosen.
                     locations: 'Outdoors', //clara used medium: for her data
-
+                    
                 //    9. create an array of the kinds of exercise that will be used with the select-option in
                     //    form for the user to select the kind.
                     kinds: ['Biking', 'Walking', 'Running', 'Rowing'],
@@ -286,7 +287,7 @@
                             date: date, //not this.date because we created a new object from the Date(this.dateString) called date just above
                             hours: this.hours,
                             miles: this.miles,
-                            kind: this.kinds,
+                            kind: this.kind,  // kinds is the list of choices, kind is the one the user picks
                             locations: this.locations,
                             notes: this.notes
                         }
@@ -318,6 +319,13 @@
                     // Info on the international dateTime constructor:
                     // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/DateTimeFormat
                 //    move on to 20b (used in our template WAY above ^^^^)
+                },
+                shortNotes(notes) {
+                    if (notes.length > 40) { // longer than 40
+                        return notes.substring(0, 40) + '...'  // return first 40 plus '...'
+                    } else {
+                        return notes  // return original 
+                    }
                 }
             },
         //    22a. Display total number of records by using the activityRecords array from ^^^ way above. Need to place this
